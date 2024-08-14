@@ -101,7 +101,13 @@ For more detailed help, run:
 npx hardhat help
 ```
 
-Authors
+Author
+
+
 Micheal Alfred
+
+
 License
+
+
 This project is licensed under the MIT License - see the LICENSE.md file for details.
