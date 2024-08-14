@@ -7,6 +7,14 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "hardhat/console.sol";
 
 contract DegenToken is ERC20, Ownable, ERC20Burnable {
+
+    struct StoreRewards {
+        uint DegenSword;
+        uint DegenNFT;
+        uint DegenShield;
+    }
+    mapping (address => StoreRewards) public redeemed;
+
     constructor() ERC20("Degen", "DGN") Ownable(msg.sender) {}
 
     function mint(address to, uint256 amount) public onlyOwner {
@@ -40,39 +48,40 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
 
     function showStoreItems() external pure returns (string memory) {
         console.log("The following items are available for purchase:");
-        console.log("Selection 1.  Degen NFT");
+        console.log("Selection 1.  DegenSword");
         console.log("Selection 2. Degen Swag");
-        console.log("Selection 3. Degen OG Role");
+        console.log("Selection 3. Degen Shield");
         return
-            "The following items are available for purchase:\nSelection 1.  Degen NFT\nSelection 2.  Degen Swag\nSelection 3.  Degen OG Role ";
+            "The following items are available for purchase:\nSelection 1.  DegenSword\nSelection 2.  Degen NFT\nSelection 3.  Degen Shield ";
     }
 
     function redeemTokens(uint8 _userChoice) external payable returns (bool) {
+        StoreRewards storage redeemedItems = redeemed[msg.sender];
         if (_userChoice == 1) {
             require(
                 this.balanceOf(msg.sender) >= 100,
                 "You do not have enough Degen Tokens"
             );
-            approve(msg.sender, 100);
-            transferFrom(msg.sender, owner(), 100);
-            console.log("You have redeemed for a Degen NFT!");
+            redeemedItems.DegenSword++;
+            burn(100);
+            console.log("You have redeemed for a Degen Sword!");
             return true;
         } else if (_userChoice == 2) {
             require(
                 this.balanceOf(msg.sender) >= 75,
                 "You do not have enough Degen Tokens"
             );
-            approve(msg.sender, 75);
-            transferFrom(msg.sender, owner(), 75);
-            console.log("You have redeemed for an official Degen Swag");
+           redeemedItems.DegenNFT++;
+            burn(75);
+            console.log("You have redeemed for an official Degen NFT");
             return true;
         } else if (_userChoice == 3) {
             require(
                 this.balanceOf(msg.sender) >= 50,
                 "You do not have enough Degen Tokens"
             );
-            approve(msg.sender, 50);
-            transferFrom(msg.sender, owner(), 50);
+           redeemedItems.DegenShield++;
+             burn(50);
             console.log(
                 "You have redeemed for OG status in our Degen Discord!"
             );
