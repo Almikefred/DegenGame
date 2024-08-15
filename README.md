@@ -15,6 +15,7 @@ The DegenToken contract is a standard ERC20 token implementation written in Soli
 - **Burning**: Token holders can burn their tokens, removing them from circulation.
 - **Transfer Tokens**: Token holders can transfer tokens to other addresses.
 - **Redeem Tokens**: Token holders can redeem tokens for specific items or privileges.
+- **uint2Str**: Is a helper function that helps converts uint to string
 
 ## Functions
 
@@ -39,7 +40,7 @@ The DegenToken contract is a standard ERC20 token implementation written in Soli
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-- Contract Address: [0x4eF007f99fe8bd7283dB82b7f2Ad61C9b9E1C478](https://testnet.snowtrace.io/address/0x4eF007f99fe8bd7283dB82b7f2Ad61C9b9E1C478)
+- Contract Address: [0xE5Ad41D4e67aE5fBC74c7ca8ddEBeC2C1e8A46a5](https://testnet.snowtrace.io/address/0xE5Ad41D4e67aE5fBC74c7ca8ddEBeC2C1e8A46a5)
 
 ## Getting Started
 
