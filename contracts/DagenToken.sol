@@ -68,24 +68,27 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
     }
 
     function redeemTokens(uint8 _userChoice) external returns (bool) {
-        require(_userChoice >= 1 && _userChoice <= 3, "Invalid choice");
+    require(_userChoice >= 1 && _userChoice <= 3, "Invalid choice");
 
-        StoreItem memory item = storeItems[_userChoice];
-        require(balanceOf(msg.sender) >= item.cost, "You do not have enough Degen Tokens");
+    StoreItem memory item = storeItems[_userChoice];
+    require(balanceOf(msg.sender) >= item.cost, "You do not have enough Degen Tokens");
 
-        StoreRewards storage redeemedItems = redeemed[msg.sender];
-        if (_userChoice == 1) {
-            redeemedItems.DegenSword++;
-        } else if (_userChoice == 2) {
-            redeemedItems.DegenNFT++;
-        } else if (_userChoice == 3) {
-            redeemedItems.DegenShield++;
-        }
+    // Burn the tokens first
+    burn(item.cost);
 
-        burn(item.cost);
-        console.log("You have redeemed for a %s!", item.name);
-        return true;
+    // Now add the item to the user's account
+    StoreRewards storage redeemedItems = redeemed[msg.sender];
+    if (_userChoice == 1) {
+        redeemedItems.DegenSword++;
+    } else if (_userChoice == 2) {
+        redeemedItems.DegenNFT++;
+    } else if (_userChoice == 3) {
+        redeemedItems.DegenShield++;
     }
+
+    console.log("You have redeemed for a %s!", item.name);
+    return true;
+}
 
     function uint2str(uint _i) internal pure returns (string memory) {
         if (_i == 0) {
